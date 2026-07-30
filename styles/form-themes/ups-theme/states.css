@@ -1,0 +1,26 @@
+/* Interaction and validation states */
+.form :where(input, textarea, select):hover {
+    border-color: var(--ups-color-border-strong);
+}
+
+.form :where(input, textarea, select):focus-visible {
+    outline: none;
+    border-color: var(--ups-color-brand);
+    box-shadow: var(--ups-focus-ring);
+}
+
+.form :where(.button-wrapper button, button[type='submit']):hover {
+    background: var(--ups-color-brand-hover);
+}
+
+.form .field-invalid :where(input, textarea, select),
+.form .field-invalid .field-description {
+    border-color: var(--ups-color-error);
+    color: var(--ups-color-error);
+}
+
+.form [data-required='true'] > :where(label, legend)::after {
+    content: "*";
+    margin-inline-start: 4px;
+    color: var(--ups-color-error);
+}

@@ -1,0 +1,12 @@
+/* Typography tokens (root-level foundation) */
+:root {
+    --ups-font-family-form: "UPS Sans", "Segoe UI", Arial, sans-serif;
+
+    --ups-font-size-label: 12px;
+    --ups-font-size-control: 13px;
+    --ups-font-size-help: 12px;
+    --ups-font-size-submit: 30px;
+
+    --ups-font-weight-label: 600;
+    --ups-font-weight-title: 700;
+}

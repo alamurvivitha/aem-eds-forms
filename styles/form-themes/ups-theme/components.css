@@ -1,0 +1,97 @@
+/* Component-specific styling using wrapper patterns ({Type}-wrapper) */
+
+/* Generic text-like wrappers */
+.form :where(.text-wrapper,
+    .text-input-wrapper,
+    .number-wrapper,
+    .number-input-wrapper,
+    .email-wrapper,
+    .date-wrapper,
+    .date-input-wrapper,
+    .telephone-wrapper,
+    .telephone-input-wrapper,
+    .password-wrapper,
+    .multiline-wrapper,
+    .drop-down-wrapper) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ups-space-2);
+}
+
+/* Control elements */
+.form :where(input, textarea, select) {
+    height: var(--ups-layout-control-height);
+    border-radius: var(--ups-radius-control);
+    border-color: var(--ups-color-border);
+    background-color: var(--ups-color-surface-muted);
+    color: var(--ups-color-text-primary);
+    font-size: var(--ups-font-size-control);
+}
+
+.form :where(textarea) {
+    min-height: 72px;
+}
+
+/* Labels and help text */
+.form :where(label, fieldset.checkbox-group-wrapper legend, fieldset.radio-group-wrapper legend) {
+    color: var(--ups-color-text-primary);
+    font-size: var(--ups-font-size-label);
+    font-weight: var(--ups-font-weight-label);
+}
+
+.form .field-description {
+    font-size: var(--ups-font-size-help);
+    color: var(--ups-color-text-secondary);
+}
+
+/* Option groups */
+.form :where(.checkbox-wrapper, .radio-wrapper) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.form :where(.checkbox-group-wrapper, .radio-group-wrapper) {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Panel and repeat */
+.form .panel-wrapper {
+    border: 1px solid var(--ups-color-border);
+    border-radius: var(--ups-radius-control);
+    background: var(--ups-color-surface);
+    padding: var(--ups-space-3);
+}
+
+.form .repeat-wrapper {
+    margin-bottom: 14px;
+}
+
+/* File */
+.form .file-wrapper input[type='file'] {
+    height: auto;
+    border: 0;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+/* Image */
+.form .image-wrapper :where(picture, img) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Button */
+.form :where(.button-wrapper button, button[type='submit']) {
+    min-width: 190px;
+    border-radius: var(--ups-radius-control);
+    background: var(--ups-color-brand);
+    color: #ffffff;
+    font-size: var(--ups-font-size-submit);
+    line-height: 1.1;
+}
