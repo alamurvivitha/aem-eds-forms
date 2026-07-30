@@ -6,16 +6,13 @@
     --ups-space-4: 16px;
     --ups-space-5: 20px;
     --ups-space-6: 24px;
-
-    --ups-radius-control: 6px;
+    --ups-radius-control: 8px;
     --ups-radius-container: 12px;
-
-    --ups-layout-max-width: 780px;
-    --ups-layout-padding-inline: 20px;
+    --ups-layout-max-width: 860px;
+    --ups-layout-padding-inline: 15px;
     --ups-layout-padding-bottom: 24px;
     --ups-layout-field-gap-x: 40px;
     --ups-layout-field-gap-y: 20px;
-    --ups-layout-control-height: 38px;
-
-    --ups-focus-ring: 0 0 0 3px rgb(0 133 122 / 20%);
+    --ups-layout-control-height: 40px;
+    --ups-focus-ring: none;
 }
