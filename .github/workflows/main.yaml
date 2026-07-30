@@ -22,6 +22,6 @@ jobs:
           pwd
           ls -la
           cat package.json
-          npm ci --verbose
+          npm ci --verbose --ignore-scripts
 
       - run: npm run lint
