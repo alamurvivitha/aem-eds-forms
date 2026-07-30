@@ -4,28 +4,31 @@ main .form .form-header-wrapper {
 }
 
 main .form .form-header-banner {
-    background: #148a84;
-    color: #fff;
-    border-radius: 16px 16px 0 0;
-    padding: 34px 30px;
-    text-align: center;
+    background: var(--form-header-bg, #148a84);
+    color: var(--form-header-color, #fff);
+    border-color: var(--form-header-border-color, transparent);
+    border-style: var(--form-header-border-style, solid);
+    border-width: var(--form-header-border-width, 0);
+    border-radius: var(--form-header-radius, 16px 16px 0 0);
+    padding: var(--form-header-padding, 34px 30px);
+    text-align: var(--form-header-align, center);
 }
 
 main .form .form-header-title {
     margin: 0;
     color: inherit;
-    font-size: clamp(1.8rem, 2.3vw, 3rem);
+    font-size: var(--form-header-title-size, clamp(1.8rem, 2.3vw, 3rem));
     line-height: 1.15;
-    font-weight: 800;
+    font-weight: var(--form-header-title-weight, 800);
 }
 
 main .form .form-header-subtitle {
     margin: 18px auto 0;
     max-width: 980px;
     color: inherit;
-    font-size: clamp(1rem, 1.1vw, 1.3rem);
+    font-size: var(--form-header-subtitle-size, clamp(1rem, 1.1vw, 1.3rem));
     line-height: 1.4;
-    font-weight: 600;
+    font-weight: var(--form-header-subtitle-weight, 600);
 }
 
 @media (width <= 768px) {
