@@ -22,14 +22,25 @@
 .form :where(input, textarea, select) {
     height: var(--ups-layout-control-height);
     border-radius: var(--ups-radius-control);
+    border: 1px solid transparent;
     border-color: var(--ups-color-border);
     background-color: var(--ups-color-surface-muted);
     color: var(--ups-color-text-primary);
     font-size: var(--ups-font-size-control);
+    font-weight: 700;
+    padding: 6px 12px;
+    box-shadow: none;
 }
 
 .form :where(textarea) {
-    min-height: 72px;
+    min-height: 90px;
+    height: auto;
+}
+
+.form :where(input, textarea, select)::placeholder {
+    color: var(--ups-color-text-primary);
+    font-style: italic;
+    font-weight: 400;
 }
 
 /* Labels and help text */
@@ -37,11 +48,12 @@
     color: var(--ups-color-text-primary);
     font-size: var(--ups-font-size-label);
     font-weight: var(--ups-font-weight-label);
+    text-transform: none;
 }
 
 .form .field-description {
     font-size: var(--ups-font-size-help);
-    color: var(--ups-color-text-secondary);
+    color: var(--ups-color-text-primary);
 }
 
 /* Option groups */
@@ -88,10 +100,14 @@
 
 /* Button */
 .form :where(.button-wrapper button, button[type='submit']) {
-    min-width: 190px;
+    width: 100%;
     border-radius: var(--ups-radius-control);
     background: var(--ups-color-brand);
-    color: #ffffff;
+    color: #fff;
     font-size: var(--ups-font-size-submit);
+    font-family: "UPS Berlingske Sans Bold", "UPS Berlingske Sans", Helvetica, Arial, sans-serif;
+    font-weight: 700;
     line-height: 1.1;
+    padding: 15px 30px;
+    border: 0;
 }

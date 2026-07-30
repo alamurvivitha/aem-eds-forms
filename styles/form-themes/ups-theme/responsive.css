@@ -11,7 +11,7 @@
 
     .form :where(.button-wrapper button, button[type='submit']) {
         width: 100%;
-        max-width: 280px;
+        max-width: none;
     }
 
     .form .panel-wrapper {
@@ -29,5 +29,11 @@
 @media (width >= 1440px) {
     :root {
         --ups-layout-max-width: 860px;
+    }
+}
+
+@media (width >= 500px) {
+    .form :where(.button-wrapper button, button[type='submit']) {
+        width: 250px;
     }
 }

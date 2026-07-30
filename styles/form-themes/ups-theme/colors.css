@@ -1,19 +1,15 @@
 /* Color and theming tokens (root-level foundation) */
 :root {
-    --ups-color-bg: #ffffff;
-    --ups-color-surface: #ffffff;
+    --ups-color-bg: #fff;
+    --ups-color-surface: #fff;
     --ups-color-surface-muted: #f6f6f6;
-
-    --ups-color-text-primary: #3a2a22;
-    --ups-color-text-secondary: #666666;
-
-    --ups-color-border: #d9d9d9;
-    --ups-color-border-strong: #cfcfcf;
-
-    --ups-color-brand: #00857a;
-    --ups-color-brand-hover: #006f66;
-
-    --ups-color-error: #d93025;
+    --ups-color-text-primary: #300;
+    --ups-color-text-secondary: #474747;
+    --ups-color-border: #e0dcdb;
+    --ups-color-border-strong: #bebebe;
+    --ups-color-brand: #00857d;
+    --ups-color-brand-hover: #016862;
+    --ups-color-error: #8c0005;
     --ups-color-success: #0f5132;
     --ups-color-success-bg: #d1e7dd;
     --ups-color-success-border: #badbcc;

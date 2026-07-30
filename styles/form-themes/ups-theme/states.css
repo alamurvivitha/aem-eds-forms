@@ -5,7 +5,7 @@
 
 .form :where(input, textarea, select):focus-visible {
     outline: none;
-    border-color: var(--ups-color-brand);
+    border-color: var(--ups-color-border-strong);
     box-shadow: var(--ups-focus-ring);
 }
 
