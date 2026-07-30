@@ -1,0 +1,31 @@
+/*
+ * Bridge UPS tokens into existing Adaptive Forms variables.
+ * Keeps legacy/base selectors working while enabling theme control via tokens.
+ */
+.form {
+    --background-color-primary: var(--ups-color-bg);
+    --label-color: var(--ups-color-text-secondary);
+    --border-color: var(--ups-color-border);
+    --form-error-color: var(--ups-color-error);
+
+    --button-primary-color: var(--ups-color-brand);
+    --button-primary-hover-color: var(--ups-color-brand-hover);
+
+    --form-background-color: var(--ups-color-surface);
+    --form-input-background-color: var(--ups-color-surface-muted);
+    --form-input-border-color: var(--ups-color-border);
+    --form-invalid-border-color: var(--ups-color-error);
+
+    --form-padding: 0 var(--ups-layout-padding-inline);
+    --form-field-horz-gap: var(--ups-layout-field-gap-x);
+    --form-field-vert-gap: var(--ups-layout-field-gap-y);
+
+    --form-input-font-size: var(--ups-font-size-control);
+    --form-label-font-size: var(--ups-font-size-label);
+    --form-label-font-weight: var(--ups-font-weight-label);
+    --form-button-font-size: var(--ups-font-size-submit);
+
+    --form-button-background-color: var(--ups-color-brand);
+    --form-button-background-hover-color: var(--ups-color-brand-hover);
+    --form-button-padding: 12px 18px;
+}
