@@ -1,12 +1,16 @@
-- name: Print working directory
-  run: pwd
+name: Build
 
-- name: List files
-  run: ls -la
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
 
-- name: Show package.json
-  run: cat package.json
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     steps:
 <<<<<<< HEAD
@@ -52,3 +56,38 @@
 - name: Run lint
   run: npm run lint
 >>>>>>> 8f62bda (main.yaml)
+=======
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Show working directory
+        run: pwd
+
+      - name: Show Node and npm versions
+        run: |
+          node -v
+          npm -v
+
+      - name: List repository files
+        run: ls -la
+
+      - name: Verify package files
+        run: |
+          test -f package.json && echo "✅ package.json found"
+          test -f package-lock.json && echo "✅ package-lock.json found"
+
+      - name: Show package.json
+        run: cat package.json
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts --verbose
+
+      - name: Run ESLint
+        run: npm run lint
+>>>>>>> 2b5a890 (main.yaml)
