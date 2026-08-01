@@ -1,11 +1,13 @@
-name: Build
+- name: Print working directory
+  run: pwd
 
-on: [push]
+- name: List files
+  run: ls -la
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+- name: Show package.json
+  run: cat package.json
 
+<<<<<<< HEAD
     steps:
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -43,3 +45,10 @@ jobs:
 
       - run: npm run lint
 >>>>>>> 128ccf8 (main.yaml)
+=======
+- name: Install dependencies
+  run: npm ci --ignore-scripts --verbose
+
+- name: Run lint
+  run: npm run lint
+>>>>>>> 8f62bda (main.yaml)
