@@ -10,53 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    steps:
-<<<<<<< HEAD
-<<<<<<< HEAD
-    - uses: actions/checkout@v6
-    - name: Use Node.js 20
-      uses: actions/setup-node@v6
-      with:
-        node-version: 24
-=======
-    - uses: actions/checkout@v4
-    - name: Use Node.js 20
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
->>>>>>> 40b2b8c (Initial commit)
-    - run: npm ci
-    - run: npm run lint
-=======
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - run: node -v
-      - run: npm -v
-      - run: ls -la
-
-      - name: Install dependencies
-        run: |
-          pwd
-          ls -la
-          cat package.json
-          npm ci --verbose --ignore-scripts
-
-      - run: npm run lint
->>>>>>> 128ccf8 (main.yaml)
-=======
-- name: Install dependencies
-  run: npm ci --ignore-scripts --verbose
-
-- name: Run lint
-  run: npm run lint
->>>>>>> 8f62bda (main.yaml)
-=======
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -90,4 +43,3 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
->>>>>>> 2b5a890 (main.yaml)
