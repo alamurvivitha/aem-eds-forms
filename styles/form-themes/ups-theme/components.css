@@ -115,7 +115,7 @@
 .form :where(.button-wrapper button, button[type='submit']) {
     width: 100%;
     border-radius: var(--ups-radius-control);
-    background: var(--form-button-custom-bg, var(--ups-color-brand));
+    background: var(--ups-color-brand);
     color: #fff;
     font-size: var(--ups-font-size-submit);
     font-family: "UPS Berlingske Sans Bold", "UPS Berlingske Sans", Helvetica, Arial, sans-serif;
@@ -127,4 +127,8 @@
     overflow: visible;
     text-overflow: clip;
     overflow-wrap: anywhere;
+}
+
+.form .button-wrapper button[data-custom-bg='true'] {
+    background: var(--form-button-custom-bg);
 }

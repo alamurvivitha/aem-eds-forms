@@ -689,13 +689,13 @@ main div.form-wrapper {
  * Add `class: stack-mobile` in form config to stack all col-* fields only at <=599px.
  */
 @media (width <= 1024px) {
-    main .form form.stack-tablet .field-wrapper[class*="col-"] {
+    main .form.block:not(.edit-mode) form.stack-tablet:not(.edit-mode) .field-wrapper[class*="col-"] {
         grid-column: span 12;
     }
 }
 
 @media (width <= 599px) {
-    main .form form.stack-mobile .field-wrapper[class*="col-"] {
+    main .form.block:not(.edit-mode) form.stack-mobile:not(.edit-mode) .field-wrapper[class*="col-"] {
         grid-column: span 12;
     }
 }

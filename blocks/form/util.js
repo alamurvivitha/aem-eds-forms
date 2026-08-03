@@ -116,16 +116,22 @@ export function createButton(fd) {
   if (fd.buttonType) {
     wrapper.classList.add(`${fd?.buttonType}-wrapper`);
   }
+  const styleObj = fd?.style;
+  const propertiesStyleObj = fd?.properties?.style;
   const buttonBackgroundColor = fd?.buttonBackgroundColor
     ?? fd?.backgroundColor
     ?? fd?.bgColor
     ?? fd?.properties?.buttonBackgroundColor
     ?? fd?.properties?.backgroundColor
-    ?? fd?.properties?.bgColor;
+    ?? fd?.properties?.bgColor
+    ?? styleObj?.buttonBackgroundColor
+    ?? propertiesStyleObj?.buttonBackgroundColor;
   const buttonAlignment = fd?.buttonAlignment
     ?? fd?.alignment
     ?? fd?.properties?.buttonAlignment
-    ?? fd?.properties?.alignment;
+    ?? fd?.properties?.alignment
+    ?? styleObj?.buttonAlignment
+    ?? propertiesStyleObj?.buttonAlignment;
 
   if (buttonAlignment) {
     wrapper.classList.add(`button-align-${buttonAlignment}`);
@@ -138,7 +144,9 @@ export function createButton(fd) {
   button.id = fd.id;
   button.name = fd.name;
   if (buttonBackgroundColor) {
-    button.style.setProperty('--form-button-custom-bg', buttonBackgroundColor);
+    const colorValue = `${buttonBackgroundColor}`.trim();
+    button.style.setProperty('--form-button-custom-bg', colorValue);
+    button.style.background = colorValue;
     button.dataset.customBg = 'true';
   }
   if (fd?.label?.visible === false) {
