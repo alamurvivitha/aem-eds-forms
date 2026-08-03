@@ -554,14 +554,24 @@ async function setupForm(formDef, { pathname, block, editMode = false } = {}) {
   }
 
   const formProperties = def?.properties || {};
+  const appendCssDeclaration = (css, key, value) => {
+    if (!value) return css;
+    const prefix = css && !css.trim().endsWith(';') ? `${css}; ` : (css || '');
+    return `${prefix}${key}: ${value};`;
+  };
   if (formProperties.id) {
     form.id = formProperties.id;
   }
   if (formProperties.class) {
     formProperties.class.split(/\s+/).filter(Boolean).forEach((cls) => form.classList.add(cls));
   }
-  if (formProperties.css) {
-    form.style.cssText = formProperties.css;
+  let formCss = formProperties.css;
+  formCss = appendCssDeclaration(formCss, 'padding', formProperties.padding);
+  formCss = appendCssDeclaration(formCss, 'margin', formProperties.margin);
+  formCss = appendCssDeclaration(formCss, 'border', formProperties.border);
+  formCss = appendCssDeclaration(formCss, 'border-radius', formProperties.borderRadius || formProperties.radius);
+  if (formCss) {
+    form.style.cssText = formCss;
   }
 
   form.dataset.redirectUrl = def.redirectUrl || '';
