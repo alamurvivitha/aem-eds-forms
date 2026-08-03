@@ -11,25 +11,20 @@ function applyStyleProp(el, cssVar, value) {
 }
 
 export default async function decorate(element, fieldJson) {
-  const title = getText(
-    fieldJson?.headerTitle,
-    'Schedule a free consultation in 15 minutes.',
-  );
-  const subtitle = getText(
-    fieldJson?.headerSubtitle,
-    'A UPS solutions specialist will contact you shortly to schedule your virtual meeting.',
-  );
+  const title = getText(fieldJson?.headerTitle);
+  const subtitle = getText(fieldJson?.headerSubtitle);
 
   element.classList.add('form-header-wrapper');
 
   const banner = document.createElement('div');
   banner.className = 'form-header-banner';
 
-  const heading = document.createElement('h2');
-  heading.className = 'form-header-title';
-  heading.innerHTML = stripTags(title);
-
-  banner.append(heading);
+  if (title) {
+    const heading = document.createElement('h2');
+    heading.className = 'form-header-title';
+    heading.innerHTML = stripTags(title);
+    banner.append(heading);
+  }
 
   if (subtitle) {
     const text = document.createElement('p');

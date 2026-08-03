@@ -572,6 +572,14 @@ async function setupForm(formDef, { pathname, block, editMode = false } = {}) {
   formCss = appendCssDeclaration(formCss, 'border-radius', formProperties.borderRadius || formProperties.radius);
   if (formCss) {
     form.style.cssText = formCss;
+    const formPaddingLeft = form.style.paddingLeft || form.style.paddingInlineStart;
+    const formPaddingRight = form.style.paddingRight || form.style.paddingInlineEnd;
+    if (formPaddingLeft) {
+      form.style.setProperty('--form-inline-padding-left', formPaddingLeft);
+    }
+    if (formPaddingRight) {
+      form.style.setProperty('--form-inline-padding-right', formPaddingRight);
+    }
   }
 
   form.dataset.redirectUrl = def.redirectUrl || '';
