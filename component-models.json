@@ -339,6 +339,44 @@
       },
       {
         "component": "tab",
+        "label": "Style",
+        "name": "style"
+      },
+      {
+        "component": "text",
+        "name": "buttonBackgroundColor",
+        "label": "Button background color",
+        "valueType": "string",
+        "description": "Any valid CSS color. Example: #148a84"
+      },
+      {
+        "component": "select",
+        "name": "buttonAlignment",
+        "label": "Button alignment",
+        "valueType": "string",
+        "value": "left",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Center",
+            "value": "center"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Help Content",
+        "name": "help"
+      },
+      {
+        "component": "tab",
         "label": "Help Content",
         "name": "help"
       },
@@ -4071,6 +4109,10 @@
           {
             "name": "UPS Teal",
             "value": "#148a84"
+          },
+          {
+            "name": "UPS Teal Alt",
+            "value": "#008a8f"
           },
           {
             "name": "UPS Gold",

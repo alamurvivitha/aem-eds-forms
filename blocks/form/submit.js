@@ -119,6 +119,7 @@ async function submitDocBasedForm(form, captcha) {
 
 export async function handleSubmit(e, form, captcha) {
   e.preventDefault();
+  form.dataset.validationAttempted = 'true';
 
   const valid = form.checkValidity();
   if (valid) {

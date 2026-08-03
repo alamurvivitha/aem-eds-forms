@@ -309,6 +309,7 @@ export async function generateFormRendition(panel, container, formId, getItems =
 function enableValidation(form) {
   form.querySelectorAll('input,textarea,select').forEach((input) => {
     input.addEventListener('invalid', (event) => {
+      event.preventDefault();
       checkValidation(event.target);
     });
   });

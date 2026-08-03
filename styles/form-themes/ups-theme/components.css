@@ -23,7 +23,7 @@
     height: var(--ups-layout-control-height);
     border-radius: var(--ups-radius-control);
     border: 1px solid transparent;
-    border-color: var(--ups-color-border);
+    border-color: var(--ups-color-border-strong);
     background-color: var(--ups-color-surface-muted);
     color: var(--ups-color-text-primary);
     font-size: var(--ups-font-size-control);
@@ -99,10 +99,23 @@
 }
 
 /* Button */
+.form .button-wrapper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.form .button-wrapper.button-align-center {
+    justify-content: center;
+}
+
+.form .button-wrapper.button-align-right {
+    justify-content: flex-end;
+}
+
 .form :where(.button-wrapper button, button[type='submit']) {
     width: 100%;
     border-radius: var(--ups-radius-control);
-    background: var(--ups-color-brand);
+    background: var(--form-button-custom-bg, var(--ups-color-brand));
     color: #fff;
     font-size: var(--ups-font-size-submit);
     font-family: "UPS Berlingske Sans Bold", "UPS Berlingske Sans", Helvetica, Arial, sans-serif;

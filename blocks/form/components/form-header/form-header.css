@@ -24,6 +24,14 @@ main .form .form-header-title {
     font-weight: var(--form-header-title-weight, 800);
 }
 
+main .form .form-header-banner a,
+main .form .form-header-banner a:visited,
+main .form .form-header-banner strong,
+main .form .form-header-banner em,
+main .form .form-header-banner span {
+    color: inherit;
+}
+
 main .form .form-header-subtitle {
     margin: 18px auto 0;
     max-width: 980px;

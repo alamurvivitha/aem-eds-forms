@@ -116,12 +116,23 @@ export function createButton(fd) {
   if (fd.buttonType) {
     wrapper.classList.add(`${fd?.buttonType}-wrapper`);
   }
+  const buttonBackgroundColor = fd?.buttonBackgroundColor ?? fd?.properties?.buttonBackgroundColor;
+  const buttonAlignment = fd?.buttonAlignment ?? fd?.properties?.buttonAlignment;
+
+  if (buttonAlignment) {
+    wrapper.classList.add(`button-align-${buttonAlignment}`);
+  }
+
   const button = document.createElement('button');
   button.textContent = fd?.label?.visible === false ? '' : fd?.label?.value;
   button.type = fd.buttonType || 'button';
   button.classList.add('button');
   button.id = fd.id;
   button.name = fd.name;
+  if (buttonBackgroundColor) {
+    button.style.setProperty('--form-button-custom-bg', buttonBackgroundColor);
+    button.dataset.customBg = 'true';
+  }
   if (fd?.label?.visible === false) {
     button.setAttribute('aria-label', fd?.label?.value || '');
   }
