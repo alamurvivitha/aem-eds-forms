@@ -116,8 +116,16 @@ export function createButton(fd) {
   if (fd.buttonType) {
     wrapper.classList.add(`${fd?.buttonType}-wrapper`);
   }
-  const buttonBackgroundColor = fd?.buttonBackgroundColor ?? fd?.properties?.buttonBackgroundColor;
-  const buttonAlignment = fd?.buttonAlignment ?? fd?.properties?.buttonAlignment;
+  const buttonBackgroundColor = fd?.buttonBackgroundColor
+    ?? fd?.backgroundColor
+    ?? fd?.bgColor
+    ?? fd?.properties?.buttonBackgroundColor
+    ?? fd?.properties?.backgroundColor
+    ?? fd?.properties?.bgColor;
+  const buttonAlignment = fd?.buttonAlignment
+    ?? fd?.alignment
+    ?? fd?.properties?.buttonAlignment
+    ?? fd?.properties?.alignment;
 
   if (buttonAlignment) {
     wrapper.classList.add(`button-align-${buttonAlignment}`);

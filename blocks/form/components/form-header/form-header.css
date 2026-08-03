@@ -32,6 +32,10 @@ main .form .form-header-banner span {
     color: inherit;
 }
 
+main .form .form-header-banner * {
+    color: inherit !important;
+}
+
 main .form .form-header-subtitle {
     margin: 18px auto 0;
     max-width: 980px;
