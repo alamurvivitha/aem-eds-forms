@@ -683,7 +683,23 @@ main div.form-wrapper {
     box-shadow: 0 4px 24px rgb(0 0 0 / 8%);
 }
 
-/* Responsive adjustments for mobile */
+/*
+ * Optional responsive stacking (opt-in per form via form-level class).
+ * Add `class: stack-tablet` in form config to stack all col-* fields at <=1024px.
+ * Add `class: stack-mobile` in form config to stack all col-* fields only at <=599px.
+ */
+@media (width <= 1024px) {
+    main .form form.stack-tablet .field-wrapper[class*="col-"] {
+        grid-column: span 12;
+    }
+}
+
+@media (width <= 599px) {
+    main .form form.stack-mobile .field-wrapper[class*="col-"] {
+        grid-column: span 12;
+    }
+}
+
 @media (width <= 599px) {
     :root {
         --form-field-horz-gap: 10px;

@@ -553,6 +553,17 @@ async function setupForm(formDef, { pathname, block, editMode = false } = {}) {
     }
   }
 
+  const formProperties = def?.properties || {};
+  if (formProperties.id) {
+    form.id = formProperties.id;
+  }
+  if (formProperties.class) {
+    formProperties.class.split(/\s+/).filter(Boolean).forEach((cls) => form.classList.add(cls));
+  }
+  if (formProperties.css) {
+    form.style.cssText = formProperties.css;
+  }
+
   form.dataset.redirectUrl = def.redirectUrl || '';
   form.dataset.thankYouMsg = def.thankYouMsg || '';
   form.dataset.action = def.action || pathname?.split('.json')[0];
