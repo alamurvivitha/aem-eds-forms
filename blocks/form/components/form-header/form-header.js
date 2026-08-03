@@ -10,9 +10,13 @@ function applyStyleProp(el, cssVar, value) {
   }
 }
 
+function getProp(fieldJson, key) {
+  return fieldJson?.[key] ?? fieldJson?.properties?.[key];
+}
+
 export default async function decorate(element, fieldJson) {
-  const title = getText(fieldJson?.headerTitle);
-  const subtitle = getText(fieldJson?.headerSubtitle);
+  const title = getText(getProp(fieldJson, 'headerTitle'));
+  const subtitle = getText(getProp(fieldJson, 'headerSubtitle'));
 
   element.classList.add('form-header-wrapper');
 
@@ -33,18 +37,18 @@ export default async function decorate(element, fieldJson) {
     banner.append(text);
   }
 
-  applyStyleProp(banner, '--form-header-bg', fieldJson?.headerBackgroundColor);
-  applyStyleProp(banner, '--form-header-color', fieldJson?.headerTextColor);
-  applyStyleProp(banner, '--form-header-border-color', fieldJson?.headerBorderColor);
-  applyStyleProp(banner, '--form-header-border-width', fieldJson?.headerBorderWidth);
-  applyStyleProp(banner, '--form-header-border-style', fieldJson?.headerBorderStyle);
-  applyStyleProp(banner, '--form-header-radius', fieldJson?.headerBorderRadius);
-  applyStyleProp(banner, '--form-header-padding', fieldJson?.headerPadding);
-  applyStyleProp(banner, '--form-header-align', fieldJson?.headerTextAlign);
-  applyStyleProp(banner, '--form-header-title-size', fieldJson?.headerTitleFontSize);
-  applyStyleProp(banner, '--form-header-subtitle-size', fieldJson?.headerSubtitleFontSize);
-  applyStyleProp(banner, '--form-header-title-weight', fieldJson?.headerTitleFontWeight);
-  applyStyleProp(banner, '--form-header-subtitle-weight', fieldJson?.headerSubtitleFontWeight);
+  applyStyleProp(banner, '--form-header-bg', getProp(fieldJson, 'headerBackgroundColor'));
+  applyStyleProp(banner, '--form-header-color', getProp(fieldJson, 'headerTextColor'));
+  applyStyleProp(banner, '--form-header-border-color', getProp(fieldJson, 'headerBorderColor'));
+  applyStyleProp(banner, '--form-header-border-width', getProp(fieldJson, 'headerBorderWidth'));
+  applyStyleProp(banner, '--form-header-border-style', getProp(fieldJson, 'headerBorderStyle'));
+  applyStyleProp(banner, '--form-header-radius', getProp(fieldJson, 'headerBorderRadius'));
+  applyStyleProp(banner, '--form-header-padding', getProp(fieldJson, 'headerPadding'));
+  applyStyleProp(banner, '--form-header-align', getProp(fieldJson, 'headerTextAlign'));
+  applyStyleProp(banner, '--form-header-title-size', getProp(fieldJson, 'headerTitleFontSize'));
+  applyStyleProp(banner, '--form-header-subtitle-size', getProp(fieldJson, 'headerSubtitleFontSize'));
+  applyStyleProp(banner, '--form-header-title-weight', getProp(fieldJson, 'headerTitleFontWeight'));
+  applyStyleProp(banner, '--form-header-subtitle-weight', getProp(fieldJson, 'headerSubtitleFontWeight'));
 
   element.replaceChildren(banner);
   return element;
