@@ -6,8 +6,8 @@ main .form .form-header-wrapper {
 }
 
 main .form .form-header-banner {
-    background: var(--form-header-bg, #148a84);
-    color: var(--form-header-color, #fff);
+    background: var(--form-header-bg, var(--form-background-color));
+    color: var(--form-header-color, var(--form-label-color));
     border-color: var(--form-header-border-color, transparent);
     border-style: var(--form-header-border-style, solid);
     border-width: var(--form-header-border-width, 0);
