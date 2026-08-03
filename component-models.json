@@ -234,31 +234,7 @@
             "name": "css",
             "label": "Form inline CSS",
             "valueType": "string",
-            "description": "Example: padding:24px; margin:16px 0; border:1px solid #ccc;"
-          },
-          {
-            "component": "text",
-            "name": "padding",
-            "label": "Form padding",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "margin",
-            "label": "Form margin",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "border",
-            "label": "Form border",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "borderRadius",
-            "label": "Form border radius",
-            "valueType": "string"
+            "description": "Example: padding:24px; margin:16px 0; border:1px solid #ccc; border-radius:12px;"
           }
         ]
       }
