@@ -373,8 +373,10 @@ export async function createForm(formDef, data, source = 'aem') {
     captcha.loadCaptcha(form);
   }
 
-  // Enable validation for all forms (doc-based and AEM edge forms)
-  enableValidation(form);
+  // Sheet forms use DOM validation; adaptive forms are model-driven.
+  if (source === 'sheet') {
+    enableValidation(form);
+  }
   
   transferRepeatableDOM(form, formDef, form, formId);
 

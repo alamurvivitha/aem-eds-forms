@@ -122,6 +122,12 @@ export async function handleSubmit(e, form, captcha) {
   e.preventDefault();
   form.dataset.validationAttempted = 'true';
 
+  // Adaptive forms submit through the model/rules engine path (rules/index.js).
+  // Do not run sheet-specific DOM submission logic for source=aem.
+  if (form.dataset.source !== 'sheet') {
+    return;
+  }
+
   const valid = form.checkValidity();
   if (valid) {
     e.submitter?.setAttribute('disabled', '');
