@@ -219,7 +219,7 @@
           {
             "component": "text",
             "name": "id",
-            "label": "Form HTML id",
+            "label": "Form id",
             "valueType": "string"
           },
           {
@@ -234,7 +234,7 @@
             "name": "css",
             "label": "Form inline CSS",
             "valueType": "string",
-            "description": "Example: padding:24px; margin:16px 0; border:1px solid #ccc; border-radius:12px;"
+            "description": "Ex: padding:24px; margin:16px 0;"
           }
         ]
       }

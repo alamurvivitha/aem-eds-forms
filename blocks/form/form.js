@@ -528,9 +528,21 @@ function loadFormCustomStyles(formDef) {
 async function setupForm(formDef, { pathname, block, editMode = false } = {}) {
   const submitProps = formDef?.properties?.['fd:submit'];
   const actionType = submitProps?.actionName || formDef?.properties?.actionType;
+  const normalizedActionType = (actionType || '').toLowerCase();
   const spreadsheetUrl = submitProps?.spreadsheet?.spreadsheetUrl
     || formDef?.properties?.spreadsheetUrl;
-  if (actionType === 'spreadsheet' && spreadsheetUrl) {
+  const useRestEndpointPost = submitProps?.enableRestEndpointPost
+    || formDef?.properties?.enableRestEndpointPost;
+  const restEndpointPostUrl = submitProps?.restEndpointPostUrl
+    || formDef?.properties?.restEndpointPostUrl;
+  const restEndPointSource = submitProps?.restEndPointSource
+    || formDef?.properties?.restEndPointSource;
+  if (normalizedActionType.includes('restendpoint')
+    && useRestEndpointPost
+    && restEndpointPostUrl
+    && (!restEndPointSource || restEndPointSource === 'posturl')) {
+    formDef.action = restEndpointPostUrl;
+  } else if (normalizedActionType.includes('spreadsheet') && spreadsheetUrl) {
     // Check if we're in an iframe and use parent window path if available
     const iframePath = window.frameElement ? window.parent.location.pathname
       : window.location.pathname;

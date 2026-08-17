@@ -266,4 +266,29 @@ describe('renderFormBlock Test Cases', () => {
     assert.ok(result.formEl, 'formEl should exist');
     assert.strictEqual(result.formEl.tagName, 'FORM', 'formEl should be a form element');
   });
+
+  it('should apply rest endpoint post URL as form action when configured', async () => {
+    const restEndpointFormDef = JSON.parse(JSON.stringify(renderFormBlockFormDef));
+    restEndpointFormDef.properties['fd:submit'] = {
+      actionName: 'restendpoint',
+      enableRestEndpointPost: true,
+      restEndPointSource: 'posturl',
+      restEndpointPostUrl: 'https://solutions.ups.com/index.php/leadCapture/save2',
+    };
+
+    const { form } = createFormBlockStructure(restEndpointFormDef);
+
+    fetchStub = sinon.stub(global, 'fetch').resolves({
+      json: () => Promise.resolve(restEndpointFormDef),
+    });
+
+    const result = await renderFormBlock(form, true);
+
+    assert.ok(result.formEl, 'formEl should exist');
+    assert.strictEqual(
+      result.formEl.dataset.action,
+      'https://solutions.ups.com/index.php/leadCapture/save2',
+      'form action should use rest endpoint post URL',
+    );
+  });
 });
