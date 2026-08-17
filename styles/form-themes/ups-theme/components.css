@@ -26,6 +26,7 @@
 .form :where(input, textarea, select) {
  
     background-color: var(--ups-color-surface-muted);
+    border-radius: 0.5rem;
  
 }
 
