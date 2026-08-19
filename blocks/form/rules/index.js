@@ -22,6 +22,7 @@ import { submitSuccess, submitFailure } from '../submit.js';
 import {
   createHelpText,
   createLabel,
+  checkValidation,
   updateOrCreateInvalidMsg,
   getCheckboxGroupValue,
   createDropdownUsingEnum,
@@ -111,7 +112,7 @@ export async function fieldChanged(payload, form, generateFormRendition) {
     switch (propertyName) {
       case 'required':
         if (currentValue === true) {
-          fieldWrapper.dataset.required = '';
+          fieldWrapper.dataset.required = 'true';
         } else {
           fieldWrapper.removeAttribute('data-required');
         }
@@ -327,6 +328,27 @@ function handleRuleEngineEvent(e, form, generateFormRendition) {
 function applyRuleEngine(htmlForm, form, captcha) {
   let submitDispatchedFromClick = false;
 
+  const validateDomAndShowErrors = () => {
+    const invalidFields = Array.from(htmlForm.querySelectorAll('input,textarea,select'))
+      .filter((field) => {
+        const wrapper = field.closest('.field-wrapper');
+        return !field.disabled && wrapper?.dataset?.visible !== 'false' && !field.checkValidity();
+      });
+
+    invalidFields.forEach((field) => {
+      field.dataset.userInteracted = 'true';
+      checkValidation(field);
+    });
+
+    const firstInvalidField = invalidFields[0];
+    if (firstInvalidField) {
+      firstInvalidField.focus();
+      firstInvalidField.scrollIntoView({ behavior: 'smooth' });
+      return false;
+    }
+    return true;
+  };
+
   htmlForm.addEventListener('change', (e) => {
     const field = e.target;
     const { value, name, checked } = field;
@@ -357,16 +379,27 @@ function applyRuleEngine(htmlForm, form, captcha) {
     form.getElement(id)?.focus();
   });
 
+  htmlForm.addEventListener('focusout', (e) => {
+    const field = e.target;
+    if (field.matches('input,textarea,select')) {
+      field.dataset.userInteracted = 'true';
+      checkValidation(field);
+    }
+  });
+
   htmlForm.addEventListener('click', async (e) => {
     const button = e.target.closest('button');
     if (button && htmlForm.contains(button)) {
+      if (button.type === 'submit') {
+        markValidationAttempted(htmlForm);
+        if (!validateDomAndShowErrors()) {
+          return;
+        }
+      }
       const element = form.getElement(button.id);
       if (button.type === 'submit' && captcha) {
-        markValidationAttempted(htmlForm);
         const token = await captcha.getToken();
         form.getElement(captcha.id).value = token;
-      } else if (button.type === 'submit') {
-        markValidationAttempted(htmlForm);
       }
       if (element) {
         if (button.type === 'submit') {
@@ -381,6 +414,10 @@ function applyRuleEngine(htmlForm, form, captcha) {
   // Bridge submit to model click so adaptive forms still submit through the rule engine.
   htmlForm.addEventListener('submit', async (e) => {
     markValidationAttempted(htmlForm);
+
+    if (!validateDomAndShowErrors()) {
+      return;
+    }
 
     if (submitDispatchedFromClick) {
       submitDispatchedFromClick = false;

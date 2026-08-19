@@ -17,6 +17,7 @@
       "columns",
       "fragment",
       "form",
+      "form-header",
       "embed-adaptive-form"
     ]
   },
