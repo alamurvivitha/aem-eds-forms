@@ -78,6 +78,7 @@ function markFieldInteracted(field) {
   }
   const setInteracted = () => {
     field.dataset.userInteracted = 'true';
+    field.closest('.field-wrapper')?.setAttribute('data-user-interacted', 'true');
   };
   field.addEventListener('change', setInteracted);
   field.addEventListener('blur', setInteracted);
@@ -344,6 +345,7 @@ function applyRuleEngine(htmlForm, form, captcha) {
 
     invalidFields.forEach((field) => {
       field.dataset.userInteracted = 'true';
+      field.closest('.field-wrapper')?.setAttribute('data-user-interacted', 'true');
       checkValidation(field);
     });
 
@@ -390,6 +392,7 @@ function applyRuleEngine(htmlForm, form, captcha) {
     const field = e.target;
     if (field.matches('input,textarea,select')) {
       field.dataset.userInteracted = 'true';
+      field.closest('.field-wrapper')?.setAttribute('data-user-interacted', 'true');
       checkValidation(field);
     }
   });
