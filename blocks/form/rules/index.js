@@ -142,6 +142,10 @@ export async function fieldChanged(payload, form, generateFormRendition) {
                 updateOrCreateInvalidMsg(field, currentValue);
               }
             } else if (!currentValue) {
+              // Keep current error message visible while the field is still invalid.
+              if (!field.checkValidity()) {
+                break;
+              }
               // Model says field is valid; clear DOM validation state
               // For file inputs, only clear if there's no custom validity already set
               // (file component may have set file-specific validation errors)
@@ -270,6 +274,9 @@ export async function fieldChanged(payload, form, generateFormRendition) {
         break;
       case 'valid':
         if (currentValue === true) {
+          if (!field.checkValidity()) {
+            break;
+          }
           updateOrCreateInvalidMsg(field, '');
           if (field.validity?.customError) {
             field?.setCustomValidity('');
