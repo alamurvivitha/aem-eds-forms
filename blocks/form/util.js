@@ -4,6 +4,21 @@ import { externalize } from './rules/functions.js';
 
 const headings = Array.from({ length: 6 }, (_, i) => `<h${i + 1}>`).join('');
 const allowedTags = `${headings}<a><b><p><i><em><strong><ul><li><ol><br><hr><u><sup><sub><s>`;
+const VALIDATION_ATTEMPTED_DATASET_KEY = 'validationAttempted';
+
+export function markValidationAttempted(form) {
+  if (!form) {
+    return;
+  }
+  if (form.dataset[VALIDATION_ATTEMPTED_DATASET_KEY] === 'true') {
+    return;
+  }
+  form.dataset[VALIDATION_ATTEMPTED_DATASET_KEY] = 'true';
+}
+
+export function isValidationAttempted(form) {
+  return form?.dataset?.[VALIDATION_ATTEMPTED_DATASET_KEY] === 'true';
+}
 
 export function stripTags(input, allowd = allowedTags) {
   if (typeof input !== 'string') {
@@ -118,13 +133,13 @@ export function createButton(fd) {
   }
   const styleObj = fd?.style;
   const propertiesStyleObj = fd?.properties?.style;
-  
+
   const buttonVariation = fd?.buttonVariation
     ?? fd?.properties?.buttonVariation
     ?? styleObj?.buttonVariation
     ?? propertiesStyleObj?.buttonVariation
     ?? 'primary';
-  
+
   const buttonAlignment = fd?.buttonAlignment
     ?? fd?.alignment
     ?? fd?.properties?.buttonAlignment
@@ -142,12 +157,12 @@ export function createButton(fd) {
   button.classList.add('button');
   button.id = fd.id;
   button.name = fd.name;
-  
+
   // Apply button variation
   if (buttonVariation) {
     button.dataset.variation = buttonVariation;
   }
-  
+
   if (fd?.label?.visible === false) {
     button.setAttribute('aria-label', fd?.label?.value || '');
   }
@@ -474,7 +489,12 @@ function normalizeDropdownOptions(payload, config = {}) {
       if (typeof item !== 'object') {
         return { label: item, value: item };
       }
-      const label = item[labelKey] ?? item.label ?? item.Label ?? item.name ?? item.value ?? item.Value;
+      const label = item[labelKey]
+        ?? item.label
+        ?? item.Label
+        ?? item.name
+        ?? item.value
+        ?? item.Value;
       const value = item[valueKey] ?? item.value ?? item.Value ?? item.id ?? item.code ?? label;
       if (label == null || value == null) {
         return null;

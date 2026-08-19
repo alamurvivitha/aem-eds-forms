@@ -1,5 +1,5 @@
 import { DEFAULT_THANK_YOU_MESSAGE, getSubmitBaseUrl } from './constant.js';
-import { checkValidation } from './util.js';
+import { checkValidation, markValidationAttempted } from './util.js';
 
 export function submitSuccess(e, form) {
   const { payload } = e;
@@ -120,7 +120,7 @@ async function submitDocBasedForm(form, captcha) {
 
 export async function handleSubmit(e, form, captcha) {
   e.preventDefault();
-  form.dataset.validationAttempted = 'true';
+  markValidationAttempted(form);
 
   // Adaptive forms submit through the model/rules engine path (rules/index.js).
   // Do not run sheet-specific DOM submission logic for source=aem.

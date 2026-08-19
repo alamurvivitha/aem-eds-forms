@@ -377,7 +377,7 @@ export async function createForm(formDef, data, source = 'aem') {
   if (source === 'sheet') {
     enableValidation(form);
   }
-  
+
   transferRepeatableDOM(form, formDef, form, formId);
 
   if (afModule && typeof Worker === 'undefined') {
@@ -493,6 +493,7 @@ function addRequestContextToForm(formDef) {
         formDef.properties.queryParams[key?.toLowerCase()] = value;
       });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn('Error reading URL parameters:', e);
     }
 
@@ -507,6 +508,7 @@ function addRequestContextToForm(formDef) {
         }
       });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn('Error reading cookies:', e);
     }
   }
@@ -520,6 +522,7 @@ function loadFormCustomStyles(formDef) {
       const stylePath = style.startsWith('/') ? style : `/${style}`;
       loadCSS(`${base}${stylePath}`);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Failed to load form CSS:', error);
     }
   }

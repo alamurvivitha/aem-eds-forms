@@ -27,6 +27,8 @@ import {
   createDropdownUsingEnum,
   createRadioOrCheckboxUsingEnum,
   fetchData,
+  markValidationAttempted,
+  isValidationAttempted,
 } from '../util.js';
 import registerCustomFunctions, { preloadFunctionScripts } from './functionRegistration.js';
 import { LOG_LEVEL } from '../constant.js';
@@ -66,7 +68,7 @@ function handleActiveChild(id, form) {
 
 function shouldRenderValidationMessage(field) {
   const parentForm = field?.form;
-  return field?.dataset?.userInteracted === 'true' || parentForm?.dataset?.validationAttempted === 'true';
+  return field?.dataset?.userInteracted === 'true' || isValidationAttempted(parentForm);
 }
 
 function markFieldInteracted(field) {
@@ -360,8 +362,11 @@ function applyRuleEngine(htmlForm, form, captcha) {
     if (button && htmlForm.contains(button)) {
       const element = form.getElement(button.id);
       if (button.type === 'submit' && captcha) {
+        markValidationAttempted(htmlForm);
         const token = await captcha.getToken();
         form.getElement(captcha.id).value = token;
+      } else if (button.type === 'submit') {
+        markValidationAttempted(htmlForm);
       }
       if (element) {
         if (button.type === 'submit') {
@@ -375,6 +380,8 @@ function applyRuleEngine(htmlForm, form, captcha) {
   // Keyboard submit (e.g. Enter) may not emit a click on the submit button.
   // Bridge submit to model click so adaptive forms still submit through the rule engine.
   htmlForm.addEventListener('submit', async (e) => {
+    markValidationAttempted(htmlForm);
+
     if (submitDispatchedFromClick) {
       submitDispatchedFromClick = false;
       return;
@@ -457,6 +464,7 @@ export async function loadRuleEngine(formDef, htmlForm, captcha, genFormRenditio
         try {
           sub.callback(sub.fieldDiv, e.payload.field, 'change', e.payload);
         } catch (err) {
+          // eslint-disable-next-line no-console
           console.error(`Error in subscription callback for field "${fieldId}":`, err);
         }
       }
@@ -499,7 +507,13 @@ async function initializeRuleEngineWorker(formDef, renderHTMLForm) {
       // Wire DOM events to the model, same as the worker path does after restoreState.
       // dataset.id must be set before loadRuleEngine keys into formModels.
       response.form.dataset.id = formDef.id;
-      await loadRuleEngine(formState, response.form, response.captcha, response.generateFormRendition, data);
+      await loadRuleEngine(
+        formState,
+        response.form,
+        response.captcha,
+        response.generateFormRendition,
+        data,
+      );
     }
     return { ...response, afbForm: formModels[formDef.id] ?? afbForm };
   }
