@@ -400,7 +400,13 @@ function applyRuleEngine(htmlForm, form, captcha) {
   htmlForm.addEventListener('click', async (e) => {
     const button = e.target.closest('button');
     if (button && htmlForm.contains(button)) {
-      if (button.type === 'submit') {
+      const element = form.getElement(button.id);
+      const elementState = typeof element?.getState === 'function' ? element.getState() : element;
+      const clickRule = elementState?.events?.click;
+      const isSubmitClickRule = typeof clickRule === 'string' && clickRule.includes('submitForm');
+      const isSubmitTrigger = button.type === 'submit' || isSubmitClickRule;
+
+      if (isSubmitTrigger) {
         e.preventDefault();
         markValidationAttempted(htmlForm);
         if (!validateDomAndShowErrors()) {
@@ -421,7 +427,6 @@ function applyRuleEngine(htmlForm, form, captcha) {
         }
         return;
       }
-      const element = form.getElement(button.id);
       if (element) {
         element.dispatch({ type: 'click' });
       }

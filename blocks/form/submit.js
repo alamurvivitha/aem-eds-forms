@@ -84,11 +84,11 @@ async function prepareRequest(form) {
   let body;
   if (isAemSource) {
     body = new FormData();
-    Object.entries(payload).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        body.append(key, value);
-      }
-    });
+    body.append('data', JSON.stringify(payload));
+    body.append('submitMetadata', JSON.stringify({
+      lang: document?.documentElement?.lang || 'en-US',
+      captchaInfo: {},
+    }));
   } else {
     headers['Content-Type'] = 'application/json';
     body = { data: payload };
@@ -113,7 +113,21 @@ async function submitDocBasedForm(form, captcha) {
     if (captcha) {
       token = await captcha.getToken();
       if (isAemSource) {
-        body.append('g-recaptcha-response', token);
+        try {
+          const metadata = JSON.parse(body.get('submitMetadata') || '{}');
+          metadata.captchaInfo = {
+            ...(metadata.captchaInfo || {}),
+            'g-recaptcha-response': token,
+          };
+          body.set('submitMetadata', JSON.stringify(metadata));
+        } catch (err) {
+          body.set('submitMetadata', JSON.stringify({
+            lang: document?.documentElement?.lang || 'en-US',
+            captchaInfo: {
+              'g-recaptcha-response': token,
+            },
+          }));
+        }
       } else {
         body.data['g-recaptcha-response'] = token;
       }
