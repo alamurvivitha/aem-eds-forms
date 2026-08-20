@@ -76,12 +76,23 @@ function constructPayload(form) {
 
 async function prepareRequest(form) {
   const { payload } = constructPayload(form);
+  const isAemSource = form.dataset.source === 'aem';
   const headers = {
-    'Content-Type': 'application/json',
     // eslint-disable-next-line comma-dangle
     'x-adobe-form-hostname': window?.location?.hostname
   };
-  const body = { data: payload };
+  let body;
+  if (isAemSource) {
+    body = new FormData();
+    Object.entries(payload).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        body.append(key, value);
+      }
+    });
+  } else {
+    headers['Content-Type'] = 'application/json';
+    body = { data: payload };
+  }
   let url;
   let baseUrl = getSubmitBaseUrl();
   if (!baseUrl) {
@@ -98,14 +109,20 @@ async function submitDocBasedForm(form, captcha) {
   try {
     const { headers, body, url } = await prepareRequest(form, captcha);
     let token = null;
+    const isAemSource = form.dataset.source === 'aem';
     if (captcha) {
       token = await captcha.getToken();
-      body.data['g-recaptcha-response'] = token;
+      if (isAemSource) {
+        body.append('g-recaptcha-response', token);
+      } else {
+        body.data['g-recaptcha-response'] = token;
+      }
     }
+    const requestBody = isAemSource ? body : JSON.stringify(body);
     const response = await fetch(url, {
       method: 'POST',
       headers,
-      body: JSON.stringify(body),
+      body: requestBody,
     });
     if (response.ok) {
       submitSuccess(response, form);
@@ -122,10 +139,9 @@ export async function handleSubmit(e, form, captcha) {
   e.preventDefault();
   markValidationAttempted(form);
 
-  // Adaptive forms submit through the model/rules engine path (rules/index.js).
-  // Do not run sheet-specific DOM submission logic for source=aem.
-  if (form.dataset.source !== 'sheet') {
-    return;
+  // Stop the adaptive model submit listener so this DOM submit handler owns request serialization.
+  if (form.dataset.source === 'aem') {
+    e.stopImmediatePropagation();
   }
 
   const valid = form.checkValidity();
@@ -137,9 +153,7 @@ export async function handleSubmit(e, form, captcha) {
       // hide error message in case it was shown before
       form.querySelectorAll('.form-message.show').forEach((el) => el.classList.remove('show'));
 
-      if (form.dataset.source === 'sheet') {
-        await submitDocBasedForm(form, captcha);
-      }
+      await submitDocBasedForm(form, captcha);
     }
   } else {
     form.querySelectorAll(':invalid:not(fieldset)').forEach((invalidField) => {

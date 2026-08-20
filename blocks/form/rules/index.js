@@ -401,20 +401,28 @@ function applyRuleEngine(htmlForm, form, captcha) {
     const button = e.target.closest('button');
     if (button && htmlForm.contains(button)) {
       if (button.type === 'submit') {
+        e.preventDefault();
         markValidationAttempted(htmlForm);
         if (!validateDomAndShowErrors()) {
           return;
         }
+        if (captcha) {
+          const token = await captcha.getToken();
+          form.getElement(captcha.id).value = token;
+          const captchaInput = htmlForm.querySelector(`#${captcha.id}`);
+          if (captchaInput) {
+            captchaInput.value = token;
+          }
+        }
+        if (typeof htmlForm.requestSubmit === 'function') {
+          htmlForm.requestSubmit(button);
+        } else {
+          htmlForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        }
+        return;
       }
       const element = form.getElement(button.id);
-      if (button.type === 'submit' && captcha) {
-        const token = await captcha.getToken();
-        form.getElement(captcha.id).value = token;
-      }
       if (element) {
-        if (button.type === 'submit') {
-          submitDispatchedFromClick = true;
-        }
         element.dispatch({ type: 'click' });
       }
     }
@@ -423,6 +431,9 @@ function applyRuleEngine(htmlForm, form, captcha) {
   // Keyboard submit (e.g. Enter) may not emit a click on the submit button.
   // Bridge submit to model click so adaptive forms still submit through the rule engine.
   htmlForm.addEventListener('submit', async (e) => {
+    if (htmlForm.dataset.source === 'aem') {
+      return;
+    }
     markValidationAttempted(htmlForm);
 
     if (!validateDomAndShowErrors()) {
