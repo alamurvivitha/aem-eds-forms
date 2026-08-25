@@ -545,6 +545,8 @@ async function setupForm(formDef, { pathname, block, editMode = false } = {}) {
     && restEndpointPostUrl
     && (!restEndPointSource || restEndPointSource === 'posturl')) {
     formDef.action = restEndpointPostUrl;
+    formDef.properties = formDef.properties || {};
+    formDef.properties.submitContentType = 'application/x-www-form-urlencoded';
   } else if (normalizedActionType.includes('spreadsheet') && spreadsheetUrl) {
     // Check if we're in an iframe and use parent window path if available
     const iframePath = window.frameElement ? window.parent.location.pathname
@@ -614,6 +616,7 @@ async function setupForm(formDef, { pathname, block, editMode = false } = {}) {
   form.dataset.redirectUrl = def.redirectUrl || '';
   form.dataset.thankYouMsg = def.thankYouMsg || '';
   form.dataset.action = def.action || pathname?.split('.json')[0];
+  form.dataset.submitContentType = def.properties?.submitContentType || '';
   form.dataset.id = def.id;
   return { form, afbForm };
 }

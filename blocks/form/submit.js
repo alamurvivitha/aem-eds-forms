@@ -59,7 +59,7 @@ function getFieldValue(fe, payload) {
   return null;
 }
 
-function constructPayload(form) {
+export function constructPayload(form) {
   const payload = { __id__: generateUnique() };
   [...form.elements].forEach((fe) => {
     if (fe.name && !fe.matches('button') && !fe.disabled && fe.tagName !== 'FIELDSET') {
@@ -72,6 +72,25 @@ function constructPayload(form) {
     }
   });
   return { payload };
+}
+
+export async function submitRestEndpointForm(form) {
+  const { payload } = constructPayload(form);
+  try {
+    const response = await fetch(form.dataset.action, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(payload).toString(),
+    });
+    if (response.ok) {
+      submitSuccess(response, form);
+    } else {
+      const error = await response.text();
+      throw new Error(error);
+    }
+  } catch (error) {
+    submitFailure(error, form);
+  }
 }
 
 async function prepareRequest(form) {

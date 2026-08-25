@@ -18,7 +18,7 @@
  * Adobe permits you to use and modify this file solely in accordance with
  * the terms of the Adobe license agreement accompanying it.
  ************************************************************************ */
-import { submitSuccess, submitFailure } from '../submit.js';
+import { submitSuccess, submitFailure, submitRestEndpointForm } from '../submit.js';
 import {
   createHelpText,
   createLabel,
@@ -333,6 +333,16 @@ function handleRuleEngineEvent(e, form, generateFormRendition) {
   }
 }
 
+// custom REST-endpoint AEM forms are flagged via form.dataset.submitContentType (see form.js)
+function triggerButtonAction(element, button, htmlForm) {
+  const { submitContentType } = htmlForm.dataset;
+  if (button.type === 'submit' && submitContentType) {
+    submitRestEndpointForm(htmlForm);
+  } else {
+    element.dispatch({ type: 'click' });
+  }
+}
+
 function applyRuleEngine(htmlForm, form, captcha) {
   let submitDispatchedFromClick = false;
 
@@ -415,7 +425,7 @@ function applyRuleEngine(htmlForm, form, captcha) {
         if (button.type === 'submit') {
           submitDispatchedFromClick = true;
         }
-        element.dispatch({ type: 'click' });
+        triggerButtonAction(element, button, htmlForm);
       }
     }
   });
@@ -446,7 +456,7 @@ function applyRuleEngine(htmlForm, form, captcha) {
 
     const submitElement = form.getElement(submitter.id);
     if (submitElement) {
-      submitElement.dispatch({ type: 'click' });
+      triggerButtonAction(submitElement, submitter, htmlForm);
     }
   });
 }
