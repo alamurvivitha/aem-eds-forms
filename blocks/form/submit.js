@@ -71,6 +71,16 @@ export function constructPayload(form) {
       }
     }
   });
+  payload.formid = '7365';
+  payload.lpId = '26183';
+  payload.subId = '24';
+  payload.munchkinId = '935-KKE-240';
+  payload.formVid = '7365';
+  payload.checksumFields = Object.keys(payload)
+    .filter((fieldName) => fieldName !== '__id__')
+    .join(',');
+  const pageUrl = window.location.href.replace(/^https?:/, '').split(/[?#]/)[0];
+  payload.lpurl = `${pageUrl}?cr={creative}&kw={keyword}`;
   return { payload };
 }
 
